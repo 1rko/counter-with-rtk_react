@@ -1,7 +1,7 @@
 import styles from "./CounterSettings.module.css";
 import {Panel} from "../panel/Panel.tsx";
 import {Input} from "../input/Input.tsx";
-import {ChangeEvent, useState} from "react";
+import {type ChangeEvent, useState} from "react";
 import {Button} from "../button/Button.tsx";
 
 type Props = {
@@ -11,7 +11,6 @@ type Props = {
     onSetActivate: () => void
     onSetDeactivate: () => void
     onApplySettings: (maxCount: number, minCount: number) => void
-    setLocalStorage: (max: number, min: number) => void
     error: string | null
     onError: (error: string | null) => void
 }
@@ -24,7 +23,6 @@ export const CounterSettings = (props: Props) => {
         onSetActivate,
         onSetDeactivate,
         onApplySettings,
-        setLocalStorage,
         error,
         onError
     } = props
@@ -65,7 +63,6 @@ export const CounterSettings = (props: Props) => {
 
     const onApplySettingsHandler = () => {
         onApplySettings(maxTemp, minTemp)
-        setLocalStorage(maxTemp, minTemp)
     }
 
     return (

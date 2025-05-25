@@ -16,15 +16,12 @@ import {
     incrementAC,
     resetAC,
     setActivateAC,
-    setCountValueAC, setMaxCountAC, setMinCountAC
+    setCountValueAC,
+    setMaxCountAC,
+    setMinCountAC
 } from "../../model/counter-reducer.ts";
 
 export const CounterWithTwoPanels = () => {
-    /*const [countValue, setCountValue] = useState(getMinFromLocalStorage)//Передаем просто как функцию, чтобы при
-    const [maxCount, setMaxCount] = useState( getMaxFromLocalStorage)//каждом ререндере функция не вызывалась
-    const [minCount, setMinCount] = useState( getMinFromLocalStorage)
-    const [isSetModeActivate, setIsSetModeActivate] = useState(false)
-    const [error, setError] = useState<string | null>(null)*/
 
     const dispatch = useAppDispatch()
     const countValue = useAppSelector(selectCounterValue)
@@ -67,12 +64,6 @@ export const CounterWithTwoPanels = () => {
         dispatch(errorAC({error: error}))
     }
 
-
-    const setLocalStorage = (max: number, min: number) => {
-        localStorage.setItem("maxCount", JSON.stringify(max))
-        localStorage.setItem("minCount", JSON.stringify(min))
-    }
-
     return (
         <div className={styles.counter}>
             <CounterSettings maxCount={maxCount}
@@ -83,7 +74,6 @@ export const CounterWithTwoPanels = () => {
                              onApplySettings={onApplySettings}
                              error={error}
                              onError={onError}
-                             setLocalStorage={setLocalStorage}
             />
             <CounterDisplay countValue={countValue}
                             maxCount={maxCount}

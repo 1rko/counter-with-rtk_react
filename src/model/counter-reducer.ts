@@ -17,10 +17,13 @@ export type CounterState = {
     error: string | null
 }
 
+const DEFAULT_MIN_VALUE = 0
+const DEFAULT_MAX_VALUE = 5
+
 const initialState: CounterState = {
     countValue: 0,
-    maxCount: 5,
-    minCount: 0,
+    maxCount: DEFAULT_MAX_VALUE,
+    minCount: DEFAULT_MIN_VALUE,
     isSetModeActivate: false,
     error: null,
 }
@@ -36,17 +39,17 @@ export const counterReducer = createReducer(initialState, builder => {
         .addCase(setMinCountAC, (state, action) => {
             state.minCount = action.payload.minValue
         })
-        .addCase(incrementAC, (state, action) => {
+        .addCase(incrementAC, (state) => {
             if (state.countValue < state.maxCount) {
                 state.countValue = state.countValue + 1
             }
         })
-        .addCase(decrementAC, (state, action) => {
+        .addCase(decrementAC, (state) => {
             if (state.countValue > state.minCount) {
                 state.countValue = state.countValue - 1
             }
         })
-        .addCase(resetAC, (state, action) => {
+        .addCase(resetAC, (state) => {
             state.countValue = state.minCount
         })
         .addCase(setActivateAC, (state, action) => {

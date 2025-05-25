@@ -1,18 +1,33 @@
-const DEFAULT_MIN_VALUE = 0
-const DEFAULT_MAX_VALUE = 5
+import type {RootState} from "../app/store.ts";
 
-export function getMaxFromLocalStorage ()  {
-    console.log('getMaxFromLocalStorage')
-    if (localStorage.getItem("maxCount")) {
-        return JSON.parse(localStorage.getItem("maxCount") as string)
+export const saveState = (state: RootState) => {
+    try {
+        const serializedState = JSON.stringify(state);
+        localStorage.setItem('state', serializedState);
+    } catch {
+        // ignore write errors
     }
-    else return DEFAULT_MAX_VALUE        //default значение? при первичной загрузке страницы(т.к. localStorage.getItem("maxCount")==null)
-}
+};
 
-export function getMinFromLocalStorage ()  {
-    console.log('getMinFromLocalStorage')
-    if (localStorage.getItem("minCount")) {
-        return JSON.parse(localStorage.getItem("minCount") as string)
+export const loadState = (settings = {}) => {
+    try {
+        const serializedState = localStorage.getItem('state');
+        if (serializedState === null) {
+            return undefined;
+        }
+
+        let preloadedState = JSON.parse(serializedState)
+        preloadedState = {
+            ...preloadedState,
+            counter: {
+                ...preloadedState.counter,
+                ...settings                 //передаем значение, которые нам нужно четко зафиксировать в сохраненном state
+            }                               //например, isSetModeActivate = false, error = null
+        }
+
+        return preloadedState;
+    } catch (err) {
+        console.log('Error ', err)
+        return undefined;
     }
-    else return DEFAULT_MIN_VALUE       //default значение? при первичной загрузке страницы(т.к. localStorage.getItem("maxCount")==null)
-}
+};
