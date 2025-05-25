@@ -67,6 +67,7 @@ export const CounterWithTwoPanels = () => {
         dispatch(errorAC({error: error}))
     }
 
+
     const setLocalStorage = (max: number, min: number) => {
         localStorage.setItem("maxCount", JSON.stringify(max))
         localStorage.setItem("minCount", JSON.stringify(min))
